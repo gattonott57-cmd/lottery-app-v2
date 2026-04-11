@@ -8,50 +8,71 @@
       font-family: sans-serif;
       background-image: url("IMG_2751.jpeg");
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       text-align: center;
       color: white;
     }
 
     .container {
       background: rgba(0,0,0,0.6);
-      padding: 30px;
-      margin: 100px auto;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 15px;
+      padding: 50px 30px;
+      margin: 60px auto;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 20px;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
     }
 
     input {
-      padding: 10px;
-      width: 80%;
-      margin-bottom: 10px;
-      border-radius: 5px;
+      padding: 15px;
+      width: 90%;
+      font-size: 18px;
+      margin-bottom: 15px;
+      border-radius: 10px;
       border: none;
     }
 
     button {
-      padding: 10px 20px;
+      padding: 15px 30px;
+      font-size: 18px;
       border: none;
-      border-radius: 5px;
+      border-radius: 12px;
       background: #ffcc00;
       font-weight: bold;
+      box-shadow: 0 5px 0 #cc9900;
+      transition: 0.1s;
+    }
+
+    button:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #cc9900;
+    }
+
+    button:disabled {
+      background: #999;
+      box-shadow: none;
     }
 
     #result {
-      margin-top: 20px;
-      font-size: 20px;
+      margin-top: 25px;
+      font-size: 18px;
+      line-height: 1.6;
+      white-space: pre-line;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h2>🎯 抽選チャレンジ</h2>
+    <h2>🌼 抽選チャレンジ 🌼</h2>
 
     <input id="instagramId" placeholder="Instagram IDを入力">
     <br>
-    <button id="drawBtn" disabled>抽選する</button>
+    <button id="drawBtn" disabled>抽選する🌼</button>
 
     <p id="result"></p>
   </div>
