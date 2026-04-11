@@ -53,7 +53,7 @@ DMで送ってください😆`;
   let isWin = false;
 
   // ③ 10人未満なら30%抽選
-  if (winCount < 2) {
+  if (winCount < 10） {
     isWin = Math.random() < 0.3;
   } else {
     isWin = false;
