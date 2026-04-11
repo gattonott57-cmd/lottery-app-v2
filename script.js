@@ -12,17 +12,18 @@ input.addEventListener("input", () => {
 button.addEventListener("click", async () => {
   const userId = input.value.trim().toLowerCase();
 
-  const q = query(
+  // ① すでに引いたかチェック
+  const userQuery = query(
     collection(db, "lotteryResults"),
     where("instagramId", "==", userId)
   );
 
-  const snapshot = await getDocs(q);
+  const userSnapshot = await getDocs(userQuery);
 
-  if (!snapshot.empty) {
-    const data = snapshot.docs[0].data();
+  if (!userSnapshot.empty) {
+    const data = userSnapshot.docs[0].data();
 
-    if (data.result.includes("当選")) {
+    if (data.result === "当選") {
       result.innerText = `🎉当選🎉
 たんぽぽ変身動画プレゼント！
 
@@ -40,9 +41,25 @@ DMで送ってください😆`;
     return;
   }
 
-  // 抽選
-  const isWin = Math.random() < 0.5;
+  // ② 当選者数チェック
+  const winQuery = query(
+    collection(db, "lotteryResults"),
+    where("result", "==", "当選")
+  );
 
+  const winSnapshot = await getDocs(winQuery);
+  const winCount = winSnapshot.size;
+
+  let isWin = false;
+
+  // ③ 10人未満なら30%抽選
+  if (winCount < 10) {
+    isWin = Math.random() < 0.3;
+  } else {
+    isWin = false;
+  }
+
+  // ④ 表示
   if (isWin) {
     result.innerText = `🎉当選🎉
 たんぽぽ変身動画プレゼント！
@@ -58,6 +75,7 @@ DMで送ってください🌼`;
 DMで送ってください😆`;
   }
 
+  // ⑤ 保存
   await addDoc(collection(db, "lotteryResults"), {
     instagramId: userId,
     result: isWin ? "当選" : "ハズレ",
