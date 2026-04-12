@@ -91,7 +91,7 @@ button.addEventListener("click", async () => {
     console.log("保存成功🔥");
 
   } catch (e) {
-    console.error("エラー💣", e);
-    result.innerText = "エラー発生：" + e.message;
-  }
+  alert("エラー：" + e.message);
+  result.innerText = "エラー発生：" + e.message;
+}
 });
