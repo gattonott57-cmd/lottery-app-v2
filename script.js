@@ -17,39 +17,32 @@ button.addEventListener("click", async () => {
   const userId = input.value.trim().toLowerCase();
 
   try {
-    // ★ 強制テスト保存（これで接続確認）
+    // ★ 接続確認（残してOK）
     await addDoc(collection(db, "test"), {
       check: "OK",
       time: new Date()
     });
 
-    // ① すでに引いたかチェック
-    const userQuery = query(
-      collection(db, "lotteryResults"),
-      where("instagramId", "==", userId)
-    );
+    // ❌ ここを一時的に無効化（重要）
+    // if (!userSnapshot.empty) {
+    //   const data = userSnapshot.docs[0].data();
 
-    const userSnapshot = await getDocs(userQuery);
+    //   if (data.result === "当選") {
+    //     result.innerText = `🎉当選🎉
+    // たんぽぽ変身動画プレゼント！
 
-    if (!userSnapshot.empty) {
-      const data = userSnapshot.docs[0].data();
+    // この画面をスクショして
+    // ペットの写真と一緒にDMで送ってください🌼`;
+    //   } else {
+    //     result.innerText = `今回はハズレ😢
+    // でも画像プレゼント🎁
 
-      if (data.result === "当選") {
-        result.innerText = `🎉当選🎉
-たんぽぽ変身動画プレゼント！
+    // ペットの写真をDMで送ってください😆`;
+    //   }
+    //   return;
+    // }
 
-この画面をスクショして
-ペットの写真と一緒にDMで送ってください🌼`;
-      } else {
-        result.innerText = `今回はハズレ😢
-でも画像プレゼント🎁
-
-ペットの写真をDMで送ってください😆`;
-      }
-      return;
-    }
-
-    // ② 当選数チェック
+    // ① 当選数チェック
     const winQuery = query(
       collection(db, "lotteryResults"),
       where("result", "==", "当選")
@@ -60,14 +53,14 @@ button.addEventListener("click", async () => {
 
     let isWin = false;
 
-    // ③ 抽選ロジック
+    // ② 抽選ロジック
     if (winCount < 10) {
       isWin = Math.random() < 0.3;
     } else {
       isWin = false;
     }
 
-    // ④ 表示
+    // ③ 表示
     if (isWin) {
       result.innerText = `🎉当選🎉
 たんぽぽ変身動画プレゼント！
@@ -81,7 +74,7 @@ button.addEventListener("click", async () => {
 ペットの写真をDMで送ってください😆`;
     }
 
-    // ⑤ 本番保存
+    // ④ 本番保存（ここが今回のゴール🔥）
     await addDoc(collection(db, "lotteryResults"), {
       instagramId: userId,
       result: isWin ? "当選" : "ハズレ",
@@ -91,7 +84,7 @@ button.addEventListener("click", async () => {
     console.log("保存成功🔥");
 
   } catch (e) {
-  alert("エラー：" + e.message);
-  result.innerText = "エラー発生：" + e.message;
-}
+    alert("エラー：" + e.message);
+    result.innerText = "エラー発生：" + e.message;
+  }
 });
