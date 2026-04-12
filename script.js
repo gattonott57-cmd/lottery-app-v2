@@ -15,9 +15,9 @@ button.addEventListener("click", async () => {
   const userId = input.value.trim().toLowerCase();
 
   try {
-    // ① すでに引いたかチェック（1人1回制限）
+    // ① すでに引いたかチェック（1人1回）
     const userQuery = query(
-      collection(db, "lotteryResults"),
+      collection(db, "lotteryResults2"),
       where("instagramId", "==", userId)
     );
 
@@ -45,7 +45,7 @@ DMで送ってください😆`;
 
     // ② 当選数チェック
     const winQuery = query(
-      collection(db, "lotteryResults"),
+      collection(db, "lotteryResults2"),
       where("result", "==", "当選")
     );
 
@@ -78,7 +78,7 @@ DMで送ってください😆`;
     }
 
     // ⑤ 保存
-    await addDoc(collection(db, "lotteryResults"), {
+    await addDoc(collection(db, "lotteryResults2"), {
       instagramId: userId,
       result: isWin ? "当選" : "ハズレ",
       time: new Date()
