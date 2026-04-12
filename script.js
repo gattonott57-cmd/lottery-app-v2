@@ -1,4 +1,5 @@
 alert("script動いてる");
+
 import { db } from "./firebase.js";
 import { collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -16,6 +17,12 @@ button.addEventListener("click", async () => {
   const userId = input.value.trim().toLowerCase();
 
   try {
+    // ★ 強制テスト保存（これで接続確認）
+    await addDoc(collection(db, "test"), {
+      check: "OK",
+      time: new Date()
+    });
+
     // ① すでに引いたかチェック
     const userQuery = query(
       collection(db, "lotteryResults"),
@@ -74,7 +81,7 @@ button.addEventListener("click", async () => {
 ペットの写真をDMで送ってください😆`;
     }
 
-    // ⑤ 保存
+    // ⑤ 本番保存
     await addDoc(collection(db, "lotteryResults"), {
       instagramId: userId,
       result: isWin ? "当選" : "ハズレ",
