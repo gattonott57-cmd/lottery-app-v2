@@ -1,5 +1,3 @@
-alert("script動いてる");
-
 import { db } from "./firebase.js";
 import { collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -17,32 +15,35 @@ button.addEventListener("click", async () => {
   const userId = input.value.trim().toLowerCase();
 
   try {
-    // ★ 接続確認（残してOK）
-    await addDoc(collection(db, "test"), {
-      check: "OK",
-      time: new Date()
-    });
+    // ① すでに引いたかチェック（1人1回制限）
+    const userQuery = query(
+      collection(db, "lotteryResults"),
+      where("instagramId", "==", userId)
+    );
 
-    // ❌ ここを一時的に無効化（重要）
-    // if (!userSnapshot.empty) {
-    //   const data = userSnapshot.docs[0].data();
+    const userSnapshot = await getDocs(userQuery);
 
-    //   if (data.result === "当選") {
-    //     result.innerText = `🎉当選🎉
-    // たんぽぽ変身動画プレゼント！
+    if (!userSnapshot.empty) {
+      const data = userSnapshot.docs[0].data();
 
-    // この画面をスクショして
-    // ペットの写真と一緒にDMで送ってください🌼`;
-    //   } else {
-    //     result.innerText = `今回はハズレ😢
-    // でも画像プレゼント🎁
+      if (data.result === "当選") {
+        result.innerText = `🎉当選🎉
+たんぽぽ変身動画プレゼント！
 
-    // ペットの写真をDMで送ってください😆`;
-    //   }
-    //   return;
-    // }
+この画面をスクショして
+変身希望のペットの写真と一緒に
+DMで送ってください🌼`;
+      } else {
+        result.innerText = `今回はハズレ😢
+でも“変身画像”プレゼント🎁
 
-    // ① 当選数チェック
+変身希望のペットの写真を
+DMで送ってください😆`;
+      }
+      return;
+    }
+
+    // ② 当選数チェック
     const winQuery = query(
       collection(db, "lotteryResults"),
       where("result", "==", "当選")
@@ -53,35 +54,35 @@ button.addEventListener("click", async () => {
 
     let isWin = false;
 
-    // ② 抽選ロジック
+    // ③ 抽選ロジック（10人まで30%）
     if (winCount < 10) {
       isWin = Math.random() < 0.3;
     } else {
       isWin = false;
     }
 
-    // ③ 表示
+    // ④ 表示
     if (isWin) {
       result.innerText = `🎉当選🎉
 たんぽぽ変身動画プレゼント！
 
 この画面をスクショして
-ペットの写真と一緒にDMで送ってください🌼`;
+変身希望のペットの写真と一緒に
+DMで送ってください🌼`;
     } else {
       result.innerText = `今回はハズレ😢
-でも画像プレゼント🎁
+でも“変身画像”プレゼント🎁
 
-ペットの写真をDMで送ってください😆`;
+変身希望のペットの写真を
+DMで送ってください😆`;
     }
 
-    // ④ 本番保存（ここが今回のゴール🔥）
+    // ⑤ 保存
     await addDoc(collection(db, "lotteryResults"), {
       instagramId: userId,
       result: isWin ? "当選" : "ハズレ",
       time: new Date()
     });
-
-    console.log("保存成功🔥");
 
   } catch (e) {
     alert("エラー：" + e.message);
