@@ -28,17 +28,16 @@ button.addEventListener("click", async () => {
 
       if (data.result === "当選") {
         result.innerText = `🎉当選🎉
-たんぽぽ変身動画プレゼント！
+変身動画プレゼント！
 
 この画面をスクショして
 変身希望のペットの写真と一緒に
 DMで送ってください🌼`;
       } else {
         result.innerText = `今回はハズレ😢
-でも“変身画像”プレゼント🎁
+でハズレを集めると良いことあるかも🤭🎁
 
-変身希望のペットの写真を
-DMで送ってください😆`;
+スクショで保存しておいて下さい🤲`;
       }
       return;
     }
