@@ -32,7 +32,9 @@ button.addEventListener("click", async () => {
 
 この画面をスクショして
 変身希望のペットの写真と一緒に
-DMで送ってください🌼`;
+DMで送ってください🌼
+アクキーやマグもおすすめです😆
+`;
       } else {
         result.innerText = `今回はハズレ😢
 変身は800円で受付可能です。（通常1500円）
