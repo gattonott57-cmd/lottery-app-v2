@@ -60,8 +60,14 @@ DMで送ってください🌼`;
       isWin = Math.random() < 0.3;
     
 
-    // ④ 表示
-    if (isWin) {
+  
+
+// ④ 表示
+document.body.style.backgroundImage = 'url("IMG_3158.jpeg")';
+if (isWin) {
+
+
+ 
       result.innerText = `🎉当選🎉
 変身動画プレゼント！
 
