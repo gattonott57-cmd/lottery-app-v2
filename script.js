@@ -66,7 +66,7 @@ DMで送ってください🌼
   
 
 // ④ 表示
-document.body.style.backgroundImage = 'url("IMG_3158.jpeg")';
+document.body.style.backgroundImage = 'url("IMG_3361.jpeg")';
 if (isWin) {
 
 
