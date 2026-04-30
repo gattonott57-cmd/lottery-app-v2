@@ -5,19 +5,16 @@ const input = document.getElementById("instagramId");
 const button = document.getElementById("drawBtn");
 const result = document.getElementById("result");
 
-// 入力でボタンON
 input.addEventListener("input", () => {
   button.disabled = input.value.trim() === "";
 });
 
-// 抽選処理
 button.addEventListener("click", async () => {
   const userId = input.value.trim().toLowerCase();
 
   try {
-    // ① すでに引いたかチェック（1人1回）
     const userQuery = query(
-      collection(db, "lotteryResults2"),
+      collection(db, "lotteryResults3"),
       where("instagramId", "==", userId)
     );
 
@@ -33,8 +30,7 @@ button.addEventListener("click", async () => {
 この画面をスクショして
 変身希望のペットの写真と一緒に
 DMで送ってください🌼
-アクキーやマグもおすすめです😆
-`;
+アクキーやマグもおすすめです😆`;
       } else {
         result.innerText = `今回はハズレ😢
 変身は800円で受付可能です。（通常1500円）
@@ -47,37 +43,17 @@ DMで送ってください🌼
       return;
     }
 
-    // ② 当選数チェック
-    const winQuery = query(
-      collection(db, "lotteryResults2"),
-      where("result", "==", "当選")
-    );
+    let isWin = Math.random() < 0.3;
 
-    const winSnapshot = await getDocs(winQuery);
-    const winCount = winSnapshot.size;
+    document.body.style.backgroundImage = 'url("IMG_3361.jpeg")';
 
-    let isWin = false;
-
-    // ③ 抽選ロジック（当たり無限、当選確率30%）
-    
-      isWin = Math.random() < 0.3;
-    
-
-  
-
-// ④ 表示
-document.body.style.backgroundImage = 'url("IMG_3361.jpeg")';
-if (isWin) {
-
-
- 
+    if (isWin) {
       result.innerText = `🎉当選🎉
 変身動画プレゼント！
 
 この画面をスクショして
 変身希望のペットの写真と一緒に
 DMで送ってください🌼
-
 アクキーやマグの作成もおすすめです！`;
     } else {
       result.innerText = `今回はハズレ😢
@@ -89,8 +65,7 @@ DMで送ってください🌼
 是非スクショしておいて下さい🤲`;
     }
 
-    // ⑤ 保存
-    await addDoc(collection(db, "lotteryResults2"), {
+    await addDoc(collection(db, "lotteryResults3"), {
       instagramId: userId,
       result: isWin ? "当選" : "ハズレ",
       time: new Date()
