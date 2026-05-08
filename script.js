@@ -45,7 +45,7 @@ DMで送ってください🌼
 
     let isWin = Math.random() < 0.3;
 
-    document.body.style.backgroundImage = 'url("IMG_3361.jpeg")';
+    document.body.style.backgroundImage = 'url("IMG_3677.jpeg")';
 
     if (isWin) {
       result.innerText = `🎉当選🎉
