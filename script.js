@@ -14,7 +14,7 @@ button.addEventListener("click", async () => {
 
   try {
     const userQuery = query(
-      collection(db, "lotteryResults3"),
+      collection(db, "lotteryResults4"),
       where("instagramId", "==", userId)
     );
 
@@ -65,7 +65,7 @@ DMで送ってください🌼
 是非スクショしておいて下さい🤲`;
     }
 
-    await addDoc(collection(db, "lotteryResults3"), {
+    await addDoc(collection(db, "lotteryResults4"), {
       instagramId: userId,
       result: isWin ? "当選" : "ハズレ",
       time: new Date()
