@@ -14,7 +14,7 @@ button.addEventListener("click", async () => {
 
   try {
     const userQuery = query(
-      collection(db, "lotteryResults5"),
+      collection(db, "lotteryResults6"),
       where("instagramId", "==", userId)
     );
 
@@ -30,12 +30,16 @@ button.addEventListener("click", async () => {
 この画面をスクショして
 変身希望のペットの写真と一緒に
 DMで送ってください🌼
+
+＊薔薇と紫陽花どちらの変身希望かも
+一緒にお知らせください🌹🌸
+
 アクキーやマグもおすすめです😆`;
       } else {
         result.innerText = `今回はハズレ😢
 変身は800円で受付可能です。（通常1500円）
 もちろんアレンジもOK🙆‍♂️
-アクキーやマグも作成OK🙆‍♂️
+アクキーやマグも作成OK🙆
 
 また、ハズレを集めると良いことあるかも🤭🎁
 スクショで保存しておいて下さい🤲`;
@@ -45,7 +49,7 @@ DMで送ってください🌼
 
     let isWin = Math.random() < 0.3;
 
-    document.body.style.backgroundImage = 'url("IMG_3825.jpeg")';
+    document.body.style.backgroundImage = 'url("IMG_3958.jpeg")';
 
     if (isWin) {
       result.innerText = `🎉当選🎉
@@ -54,6 +58,10 @@ DMで送ってください🌼
 この画面をスクショして
 変身希望のペットの写真と一緒に
 DMで送ってください🌼
+
+＊薔薇と紫陽花どちらの変身希望かも
+一緒にお知らせください🌹🌸
+
 アクキーやマグの作成もおすすめです！`;
     } else {
       result.innerText = `今回はハズレ😢
@@ -65,7 +73,7 @@ DMで送ってください🌼
 是非スクショしておいて下さい🤲`;
     }
 
-    await addDoc(collection(db, "lotteryResults5"), {
+    await addDoc(collection(db, "lotteryResults6"), {
       instagramId: userId,
       result: isWin ? "当選" : "ハズレ",
       time: new Date()
